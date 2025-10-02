@@ -25,30 +25,30 @@ Way’s last major merger impact its speed distribution in the Solar neighborhoo
 
 ### Datasets:
 
-We provide four CSV files containing the normalized speed distributions in both the Galactocentric and Geocentric frames. All distributions are defined on a common velocity grid of 0–850 km/s with 1001 points. Each column is a single $f(v)$ curve.
+The data provided here corresponds directly to **Figure 8** of the paper, which presents the reconstruction of the
+local dark matter speed distribution in the Milky Way.
 
-#### 1. `total_galactocentric.csv`  
-#### 2. `total_geocentric.csv`  
+- **total_galactocentric.csv** and **total_geocentric.csv**  
+  - Contain the reconstructed total dark matter speed distributions in the galactocentric and geocentric frames.  
+  - Columns:  
+    - `v` — velocity grid in km/s (0–850).  
+    - `f_*` — reconstructed probability density curves for different parameter samples.  
+  - These files do *not* contain parameter rows; they only include the velocity grid and the f(v) curves.
 
-- Contain the **full reconstructed dark matter speed distributions** (“green band” in the paper).  
-- **Structure:**
-  - Column `v`: velocity grid in km/s.  
-  - Columns `f_000`, `f_001`, … : reconstructed $f(v)$ curves.  
-  - First two rows encode the reconstruction parameters for each column:  
-    - Row 1: Δσ (stellar boost factor).  
-    - Row 2: $w_{\rm tr}$ (tracer weight).  
+- **stars_galactocentric.csv** and **stars_geocentric.csv**  
+  - Contain the corresponding stellar speed distributions used in the reconstruction.  
+  - Structure:  
+    - Two parameter rows at the top:  
+      - Row 1: `delta_sigma` values (km/s) describing the dispersion boost applied to stellar tracers.  
+      - Row 2: `w_tr` values indicating the DM fraction traced by each stellar population.  
+    - Header row: `v, f_000, f_001, ...`  
+    - Columns:  
+      - `v` — velocity grid in km/s (0–850).  
+      - `f_000` — unboosted stellar distribution.  
+      - `f_001, f_002, ...` — boosted stellar distributions aligned with the total reconstructions.  
 
-#### 3. `stars_galactocentric.csv`  
-#### 4. `stars_geocentric.csv`  
-
-- Contain the **stellar speed distributions**, with and without boosting.  
-- **Structure:**
-  - Column `v`: velocity grid in km/s.  
-  - Column `f_000`: unboosted stellar distribution.  
-  - Columns `f_001`, `f_002`, … : boosted stellar distributions.  
-  - First two rows encode parameters for each column:  
-    - Row 1: Δσ (stellar boost factor; `0` for unboosted).  
-    - Row 2: $w_{\rm tr}$ (blank for unboosted).  
+Together, these datasets provide both the total reconstructed dark matter distributions and the stellar tracers used
+to build them.
 
 ---
 
@@ -81,9 +81,17 @@ See [`example.ipynb`](example.ipynb) for full plots of both totals and stellar d
 
 ### Notes
 
-- All PDFs are normalized such that ∫ f(v) dv = 1.  
-- The geocentric frame includes the Sun’s peculiar velocity and the Earth’s orbital motion.  
-- The velocity grid and construction method match those used in *[paper link]*.  
+- All PDFs are normalized such that $\int f(v)dv=1$.  
+- All velocity grids are sampled from 0–850 km/s for consistency between galactocentric and geocentric frames.  
+- Naming convention:  
+  - `f_000` is reserved for the unboosted stellar distribution.  
+  - `f_001+` correspond to boosted stellar curves aligned with reconstructions.  
+  - In totals files, the column names match the reconstruction sample indices.  
+- The geocentric transformation assumes the following velocity values (km/s):  
+  - Local Standard of Rest: `v_LSR = (0, 238, 0)`  
+  - Peculiar solar motion: `v_pec = (11.1, 12.24, 7.25)`  
+  - Sun’s velocity: `v_sun = v_LSR + v_pec`  
+  - Earth’s orbital motion: `v_earth = (29.2, -0.1, 5.9)`  
 
 ---
 
