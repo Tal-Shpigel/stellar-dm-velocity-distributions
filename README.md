@@ -65,7 +65,8 @@ Minimal usage looks like:
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv("total_geocentric.csv", header=2)  # header at 3rd row
+# For TOTALS (single header row)
+df = pd.read_csv("total_geocentric.csv")
 v = df["v"].to_numpy(float)
 f0 = df["f_000"].to_numpy(float)
 
